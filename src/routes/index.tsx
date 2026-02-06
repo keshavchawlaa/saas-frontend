@@ -7,7 +7,6 @@ import PublicRoute from '../components/PublicRoute'
 import AppLayout from '../components/layout/AppLayout'
 import Users from '../pages/Users'
 import ActivityLogs from '../pages/ActivityLogs'
-import ActivityFeed from '../pages/ActivityFeed';
 
 
 const AppRoutes = () => {

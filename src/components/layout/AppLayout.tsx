@@ -32,11 +32,21 @@ const AppLayout = () => {
       </Link>
     )}
 
+    {auth.user && canViewTasks(auth.user.role) && (
+      <Link to="/projects" className={isActive('/projects')}>
+        Projects
+      </Link>
+    )}
+
     {auth.user && canManageUsers(auth.user.role) && (
       <Link to="/users" className={isActive('/users')}>
         Users
       </Link>
     )}
+
+    <Link to="/notifications" className={isActive('/notifications')}>
+      Notifications
+    </Link>
 
     {(auth.user?.role === 'ADMIN' || auth.user?.role === 'OWNER') && (
       <Link to="/activity" className={isActive('/activity')}>

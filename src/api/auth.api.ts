@@ -8,6 +8,19 @@ export const login = async (email: string, password: string) => {
   return response.data
 }
 
+export const signup = async (
+  email: string,
+  password: string,
+  name?: string
+) => {
+  const response = await api.post('/auth/signup', {
+    email,
+    password,
+    name,
+  })
+  return response.data
+}
+
 export const me = async () => {
   const res = await api.get('/auth/me')
   return res.data

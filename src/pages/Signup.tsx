@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../auth/AuthContext'
+import { signup } from '../api/auth.api'
 
-const Login = () => {
+const Signup = () => {
   const auth = useContext(AuthContext)
   const navigate = useNavigate()
 
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -20,10 +22,11 @@ const Login = () => {
     setError(null)
 
     try {
+      await signup(email, password, name)
       await auth.login(email, password)
       navigate('/dashboard')
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed')
+      setError(err.response?.data?.message || 'Signup failed')
     } finally {
       setLoading(false)
     }
@@ -31,9 +34,19 @@ const Login = () => {
 
   return (
     <div className="auth-card">
-      <h2>Login</h2>
+      <h2>Create Account</h2>
 
       <form onSubmit={handleSubmit} className="form">
+        <div className="form-field">
+          <label>Name</label>
+          <input
+            type="text"
+            placeholder="Your name"
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
+        </div>
+
         <div className="form-field">
           <label>Email</label>
           <input
@@ -59,15 +72,15 @@ const Login = () => {
         {error && <p className="form-error">{error}</p>}
 
         <button type="submit" className="primary" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
+          {loading ? 'Creating...' : 'Sign Up'}
         </button>
       </form>
 
       <p className="form-hint">
-        New here? <Link to="/signup">Create an account</Link>
+        Already have an account? <Link to="/login">Log in</Link>
       </p>
     </div>
   )
 }
 
-export default Login
+export default Signup
